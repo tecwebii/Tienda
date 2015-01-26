@@ -33,7 +33,7 @@ $resultado = mysqli_query($conexion,$consulta);
 				echo "<tr>";
 				echo "<td>" . $row['id'] . "</td>";
 				echo "<td>" . $row['clave_producto'] . "</td>";
-				echo "<td>" . $row['nombre_producto'] . "</td>";
+				echo "<td><a href='editar-producto.php?id=" . $row['id'] . "'>" . $row['nombre_producto'] . "</a></td>";
 				echo "<td>" . $row['precio'] . "</td>";
 				echo "<td><a href='includes/borrar-producto.php?id=" . $row['id'] . "'> Borrar</a></td>";
 				echo "</tr>";

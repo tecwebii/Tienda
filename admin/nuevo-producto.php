@@ -12,7 +12,6 @@ $titulo="Nuevo Producto - Administrador";
 		
 		<form action="includes/insertar-producto.php" method="POST">
 			
-			
 			<label for="clave_producto">Clave del producto</label>
 			<input type="text" name="clave_producto" value="" id="clave_producto"><br>
 			
@@ -27,7 +26,6 @@ $titulo="Nuevo Producto - Administrador";
 			
 			<label for="categoria">Categoria</label>
 			<input type="text" name="categoria" value="" id="categoria"><br>
-			
 		
 			<p><input type="submit" value="Agregar Producto"></p>
 		</form>
