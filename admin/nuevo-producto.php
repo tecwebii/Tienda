@@ -53,6 +53,8 @@ $titulo="Nuevo Producto - Administrador";
 			<label for="precio">Precio</label>
 			<input type="text" name="precio" value="" id="precio"><br>
 			
+		
+			
 			<label for="categoria">Categoria</label>
 			<input type="text" name="categoria" value="" id="categoria"><br>
 		
