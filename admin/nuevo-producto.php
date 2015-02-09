@@ -1,4 +1,7 @@
 <?php
+include_once("includes/config.php");
+$consulta_categorias = "SELECT * FROM Categorias";
+$resultado = mysqli_query($conexion,$consulta_categorias);
 $titulo="Nuevo Producto - Administrador";
 ?>
 <!DOCTYPE HTML>
@@ -9,6 +12,7 @@ $titulo="Nuevo Producto - Administrador";
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 		  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+		<script src="js/ckeditor/ckeditor.js"></script>
 		
 		<script>
 		  $(function() {
@@ -50,13 +54,31 @@ $titulo="Nuevo Producto - Administrador";
 			<label for="descripcion_producto">Descripcion del producto</label>
 			<textarea name="descripcion_producto" id="descripcion_producto"></textarea><br>
 			
+			<script>
+			                // Replace the <textarea id="editor1"> with a CKEditor
+			                // instance, using default configuration.
+			                CKEDITOR.replace( 'descripcion_producto' );
+			            </script>
+			
 			<label for="precio">Precio</label>
 			<input type="text" name="precio" value="" id="precio"><br>
 			
 		
 			
 			<label for="categoria">Categoria</label>
-			<input type="text" name="categoria" value="" id="categoria"><br>
+			<select name="categoria" id="categoria">
+				<option value="">-Selecciona una categoria</option>
+				
+				<?php while ($row = mysqli_fetch_assoc($resultado)){
+					echo "<option value='" . $row['id_cat'] ."'>"
+						. $row['nombre_categoria'] . "</option>";
+				} ?>
+				
+				<!--<option value="1">Drama</option> -->
+				
+			
+			</select>
+			<br>
 		
 			<p><input type="submit" value="Agregar Producto"></p>
 		</form>

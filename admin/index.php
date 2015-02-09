@@ -23,6 +23,7 @@ $resultado = mysqli_query($conexion,$consulta);
 			<th>clave / SKU</th>
 			<th>Nombre</th>
 			<th>Precio</th>
+			<th>Categoria</th>
 			<th>Borrar</th>
 		</tr>
 		
@@ -35,6 +36,16 @@ $resultado = mysqli_query($conexion,$consulta);
 				echo "<td>" . $row['clave_producto'] . "</td>";
 				echo "<td><a href='editar-producto.php?id=" . $row['id'] . "'>" . $row['nombre_producto'] . "</a></td>";
 				echo "<td>" . $row['precio'] . "</td>";
+				$id_producto = $row['id'];
+				$consulta_categoria = "SELECT id, id_categoria, id_cat, nombre_categoria
+				FROM Categorias 
+				INNER JOIN Productos
+				ON id_cat = id_categoria 
+				WHERE id = '$id_producto'";
+				$resultado_categoria = mysqli_query($conexion, $consulta_categoria );
+				while ($row2 = mysqli_fetch_assoc($resultado_categoria)){
+				echo "<td>" . $row2['nombre_categoria'] . "</td>";
+				}
 				echo "<td><a href='includes/borrar-producto.php?id=" . $row['id'] . "'> Borrar</a></td>";
 				echo "</tr>";
 			}
