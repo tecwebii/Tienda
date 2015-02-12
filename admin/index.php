@@ -1,8 +1,32 @@
 <?php
 include_once("includes/config.php");
 $titulo="Mi tienda - Administrador";
-$consulta = "SELECT * FROM productos";
+
+$limite_registro=3;
+$pagina=$_GET['pagina'];
+
+if (isset($_GET['pagina'])){
+	$inicio= ($pagina - 1) * $limite_registro;
+} else {
+$inicio=0;
+$pagina=1;
+}
+
+$consulta = "SELECT * FROM productos LIMIT $inicio, $limite_registro";
 $resultado = mysqli_query($conexion,$consulta);
+
+$consulta_total = mysqli_query($conexion,"SELECT * FROM productos");
+$total_registros = mysqli_num_rows($consulta_total);
+
+$paginas_totales =  ceil($total_registros/$limite_registro);
+
+echo "Pagina: " . $pagina . "<br/>";
+echo "Inicio: " . $inicio . "<br/>";
+echo "Límite de registros: " . $limite_registro . "<br/>";
+echo "Total de registros: " . $total_registros . "<br/>";
+echo "Paginas totales : " . $paginas_totales . "<br/>";
+
+
 ?>
 
 <!DOCTYPE HTML>
@@ -58,6 +82,17 @@ $resultado = mysqli_query($conexion,$consulta);
 		?>
 			</tbody>
 		</table>
+		
+		<?php
+		for($i=1; $i<$paginas_totales+1; $i++){
+			if ($i == $pagina){
+			 echo "<strong>" . $i . "</strong>";	
+			}else{
+			echo "<a href='index.php?pagina=" . $i . "'>" . $i . "</a>";
+			}
+		}
+		
+		?>
 		
 	</body>
 </html>
