@@ -61,7 +61,7 @@ echo "Paginas totales : " . $paginas_totales . "<br/>";
 				echo "<td><a href='editar-producto.php?id=" . $row['id'] . "'>" . $row['nombre_producto'] . "</a></td>";
 				echo "<td>" . $row['precio'] . "</td>";
 				$id_producto = $row['id'];
-				$consulta_categoria = "SELECT id, id_categoria, id_cat, nombre_categoria
+				$consulta_categoria = "SELECT id_categoria, id_cat, nombre_categoria
 				FROM Categorias 
 				INNER JOIN Productos
 				ON id_cat = id_categoria 
