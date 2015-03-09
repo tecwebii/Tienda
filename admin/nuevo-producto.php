@@ -72,19 +72,20 @@ $titulo="Nuevo Producto - Administrador";
 		
 			
 			<label for="categoria">Categoria</label>
-			<select name="id_categoria" id="id_categoria">
+			<!--<select name="id_categoria" id="id_categoria">
 				<option value="">-Selecciona una categoria</option>
-				
+				-->
+				<br>
 				<?php 
 				// MOSTRAMOS TODAS LAS CATEGORÍAS DISPONIBLES
 				while ($row = mysqli_fetch_assoc($resultado)){
-					echo "<option value='" . $row['id_cat'] ."'>"
-						. $row['nombre_categoria'] . "</option>";
+					echo "<input type='checkbox' name='categoria[]' value='" . $row['id_cat'] ."'>"
+						. $row['nombre_categoria'] . "<br>";
 				}
 				
 				?>
 				
-			</select>
+				<!--</select> -->
 			<br>
 		
 			<p><input type="submit" value="Agregar Producto"></p>

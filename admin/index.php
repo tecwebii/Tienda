@@ -7,7 +7,7 @@ $titulo="Mi tienda - Administrador";
 $limite_registro=3;
 //PAGINACIÓN - LEEMOS EL VALOR DE "PAGINA" EN LA URL
 $pagina=$_GET['pagina'];
-// SI EXISTE EL VALOR EN LA URL (?pagina=) ENTONCES CALCULAMOS EL NÚMERO DE REGISTRO A PARTIR DEL CUAL EMPEZARÁ A MOSTRARL
+// SI EXISTE EL VALOR EN LA URL (?pagina=) ENTONCES CALCULAMOS EL NÚMERO DE REGISTRO A PARTIR DEL CUAL EMPEZARÁ A MOSTRAR
 if (isset($_GET['pagina'])){
 	$inicio= ($pagina - 1) * $limite_registro;
 } else {
@@ -58,6 +58,7 @@ include_once("includes/menu.php");
 			<th>clave / SKU</th>
 			<th>Nombre</th>
 			<th>Precio</th>
+			<th>Fecha de Lanzamiento</th>
 			<th>Categoria</th>
 			<th>Borrar</th>
 		</tr>
@@ -72,14 +73,15 @@ include_once("includes/menu.php");
 				echo "<td>" . $row['clave_producto'] . "</td>";
 				echo "<td><a href='editar-producto.php?id=" . $row['id'] . "'>" . $row['nombre_producto'] . "</a></td>";
 				echo "<td>" . $row['precio'] . "</td>";
+				echo "<td>" . $row['fecha_lanzamiento'] . "</td>";
 				//ALMACENAMOS EL ID DEL REGISTRO EN CURSO PARA HACER UNA SEGUNDA CONSULTA
 				$id_producto = $row['id'];
 				//HACEMOS UNA CONSULTA A DOS TABLAS UNIENDOLAS A TRAVÉS DE INNER JOIN
 				$consulta_categoria = "SELECT id_categoria, id_cat, nombre_categoria
 				FROM Categorias 
-				INNER JOIN Productos
+				INNER JOIN Relacion_producto_categoria
 				ON id_cat = id_categoria 
-				WHERE id = '$id_producto'";
+				WHERE id_producto = '$id_producto'";
 				//EJECUTAMOS LA CONSULTA
 				$resultado_categoria = mysqli_query($conexion, $consulta_categoria );
 				//MOSTRAMOS LAS CATEGORÍAS ENCONTRADAS A TRAVÉS DE OTRO WHILE

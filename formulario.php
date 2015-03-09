@@ -1,0 +1,1 @@
+<h3> Tu nombre es: <?php echo $_POST['nombre']; ?></h3>

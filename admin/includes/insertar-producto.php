@@ -8,7 +8,8 @@ $clave=htmlspecialchars($_POST['clave_producto']);
 $nombre=htmlspecialchars($_POST['nombre_producto']);
 $descripcion=htmlspecialchars($_POST['descripcion_producto']);
 $precio=$_POST['precio'];
-$id_categoria=$_POST['id_categoria'];
+$categoria=$_POST['categoria'];
+//echo $categoria[2];
 $fecha=$_POST['fecha_lanzamiento'];
 
 //CAPTURAMOS LA INFORMACIÓN DE LA IMAGEN SUBIDA POR EL USUARIO
@@ -64,17 +65,23 @@ if ($width/$height > $proporcion){
 	imagejpeg($imagen_t,$nombre_final_thumb,90);
 
 	// DEFINIMOS LA CONSULTA DE PARA INSERTAR LA INFORMACIÓN INGRESADA POR EL USUARIO
-$consulta_insertar="INSERT INTO Productos
-(clave_producto,nombre_producto,descripcion_producto,imagen_producto,precio,id_categoria,fecha_lanzamiento)
-VALUES ('$clave','$nombre','$descripcion','$nombre_final_archivo','$precio','$id_categoria','$fecha')";
-	// EJECUTAMOS LA CONSULTA
+$consulta_insertar="INSERT INTO Productos (clave_producto,nombre_producto,descripcion_producto,imagen_producto,precio,fecha_lanzamiento) VALUES ('$clave','$nombre','$descripcion','$nombre_final_archivo','$precio','$fecha')";
+// EJECUTAMOS LA CONSULTA
 mysqli_query($conexion,$consulta_insertar);
+
+$total_categorias = count($categoria)-1;
+$id_nuevo_producto = mysqli_insert_id($conexion);
+
+for ($i=0; $i<=$total_categorias; $i++){
+mysqli_query($conexion,"INSERT INTO Relacion_producto_categoria (id_categoria,id_producto) VALUES ('$categoria[$i]', '$id_nuevo_producto')");
+}
+
 } else{
 	// SI EL FORMATO NO ESTA ENTRE LOS PERMITIDOS LE MOSTRAMOS UN ECHO AL USUARIO
 	echo "El tipo de archivo no es permitido, sólo puedes subir .jpg, .gif ó .png";
 }
 //AL TERMINAR LOS PROCESOS, MANDAMOS DE REGRESO AL INDEX
-header('Location:../index.php');
+//header('Location:../index.php');
 //LIBERAMOS CACHÉ DE LA PÁGINA
 ob_end_flush();
 ?>
