@@ -1,8 +1,4 @@
 <?php
-
-session_start();
-if (isset($_SESSION['usuario_admin'])){
-
 //INCLUIMOS LA CONEXIÓN A LA BASE DE DATOS
 include_once("includes/config.php");
 $titulo="Mi tienda - Administrador";
@@ -20,22 +16,15 @@ $inicio=0;
 $pagina=1;
 }
 //DEFINIMOS LA CONSULTA EN BASE A LOS VALORES DE INICIO Y EL LIMITE DE REGISTROS
-$consulta = "SELECT * FROM productos LIMIT $inicio, $limite_registro";
+$consulta = "SELECT * FROM contactos LIMIT $inicio, $limite_registro";
 //PAGINACIÓN - EJECUTAMOS LA CONSULTA ANTERIOR
 $resultado = mysqli_query($conexion,$consulta);
 //PAGINACIÓN - DEFINIMOS Y EJECUTAMOS LA CONSULTA PARA SABER CUANTOS REGISTROS TENEMOS EN LA BASE
-$consulta_total = mysqli_query($conexion,"SELECT * FROM productos");
+$consulta_total = mysqli_query($conexion,"SELECT * FROM contactos");
 //PAGINACIÓN - ALMACENAMOS EN UNA VARIABLE EL TOTAL DE REGISTROS ENCONTRADOS
 $total_registros = mysqli_num_rows($consulta_total);
 //PAGINACIÓN - ALMACENAMOS EN UNA VARIABLE EL TOTAL DE PAGINAS REDONDEANDO AL NÚMERO ENTERO SUPERIOR EL RESULTADO DEL TOTAL REGISTROS ENTRE LIMITE DE REGISTROS
 $paginas_totales =  ceil($total_registros/$limite_registro);
-
-
-//echo "Pagina: " . $pagina . "<br/>";
-//echo "Inicio: " . $inicio . "<br/>";
-//echo "Límite de registros: " . $limite_registro . "<br/>";
-//echo "Total de registros: " . $total_registros . "<br/>";
-//echo "Paginas totales : " . $paginas_totales . "<br/>";
 
 
 ?>
@@ -53,21 +42,16 @@ $paginas_totales =  ceil($total_registros/$limite_registro);
 <?php
 //INCLUIMOS EL MENÚ
 include_once("includes/menu.php");
-echo "Bienvenido " . $_SESSION["usuario_admin"];
-echo "<a href='includes/logout.php'>Cerrar Sesión </a>";
-
 ?>		
 		
 		<h1><?php echo $titulo; ?></h1>
 		<table>
 			<tbody>
 		<tr><th>ID</th>
-			<th>clave / SKU</th>
 			<th>Nombre</th>
-			<th>Precio</th>
-			<th>Fecha de Lanzamiento</th>
-			<th>Categoria</th>
-			<th>Borrar</th>
+			<th>Asunto</th>
+			<th>Correo</th>
+			<th>Mensaje</th>
 		</tr>
 		
 		<?php
@@ -77,25 +61,10 @@ echo "<a href='includes/logout.php'>Cerrar Sesión </a>";
 			while ($row = mysqli_fetch_assoc($resultado)){
 				echo "<tr>";
 				echo "<td>" . $row['id'] . "</td>";
-				echo "<td>" . $row['clave_producto'] . "</td>";
-				echo "<td><a href='editar-producto.php?id=" . $row['id'] . "'>" . $row['nombre_producto'] . "</a></td>";
-				echo "<td>" . $row['precio'] . "</td>";
-				echo "<td>" . $row['fecha_lanzamiento'] . "</td>";
-				//ALMACENAMOS EL ID DEL REGISTRO EN CURSO PARA HACER UNA SEGUNDA CONSULTA
-				$id_producto = $row['id'];
-				//HACEMOS UNA CONSULTA A DOS TABLAS UNIENDOLAS A TRAVÉS DE INNER JOIN
-				$consulta_categoria = "SELECT id_categoria, id_cat, nombre_categoria
-				FROM Categorias 
-				INNER JOIN Relacion_producto_categoria
-				ON id_cat = id_categoria 
-				WHERE id_producto = '$id_producto'";
-				//EJECUTAMOS LA CONSULTA
-				$resultado_categoria = mysqli_query($conexion, $consulta_categoria );
-				//MOSTRAMOS LAS CATEGORÍAS ENCONTRADAS A TRAVÉS DE OTRO WHILE
-				while ($row2 = mysqli_fetch_assoc($resultado_categoria)){
-				echo "<td>" . $row2['nombre_categoria'] . "</td>";
-				}
-				echo "<td><a href='includes/borrar-producto.php?id=" . $row['id'] . "'> Borrar</a></td>";
+				echo "<td>" . $row['nombre_completo'] . "</td>";
+				echo "<td>" . $row['asunto'] . "</td>";
+				echo "<td>" . $row['correo'] . "</td>";
+				echo "<td>" . $row['mensaje'] . "</td>";
 				echo "</tr>";
 			}
 			
@@ -116,12 +85,10 @@ echo "<a href='includes/logout.php'>Cerrar Sesión </a>";
 			 echo "<strong>" . $i . "</strong>";	
 			}else{
 				//SI NO ENTONCES LO HACEMOS LINK
-			echo "<a href='index.php?pagina=" . $i . "'>" . $i . "</a>";
+			echo "<a href='index_contacto.php?pagina=" . $i . "'>" . $i . "</a>";
 			}
 		}
-	} else {
-		header("Location:login_admin.php");
-	}
+		
 		?>
 		
 	</body>

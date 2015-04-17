@@ -41,6 +41,10 @@ for ($i=0; $i < $total_resultados; $i++){
 	<body>
 		<h1><?php echo $titulo; ?></h1>
 		
+		<div id="login"> 
+		<?php include_once("includes/login.php"); ?>
+		</div>
+		
 		<form action="buscador.php" method="GET">
 			<input type="text" name="palabra_clave" id="palabra_clave" placeholder="Busco...">
 			<input type="submit" value="Buscar">
