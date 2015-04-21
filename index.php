@@ -49,5 +49,11 @@ for ($i=0; $i < $total_resultados; $i++){
 			<input type="text" name="palabra_clave" id="palabra_clave" placeholder="Busco...">
 			<input type="submit" value="Buscar">
 		</form>
+		
+		<h3>PRODUCTOS DESTACADOS</h3>
+		<div id="destacado"> 
+		<?php include_once("includes/destacados.php"); ?>
+		</div>
+		
 	</body>
 </html>
