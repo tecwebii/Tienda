@@ -53,7 +53,44 @@ $titulo = "Productos Agregados al carrito";
 		<br>
 		<div><a href="index.php">CONTINUAR COMPRANDO</a></div>
 		<br>
-		<div><a href="finalizar_compra.php">FINALIZAR COMPRA</a></div>
+		<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="POST">
+		<!-- COSTO DEL ENVÍO -->
+		<input type="hidden" name="shipping" value="0">
+		<!-- DEFINE LA LEYENDA AL DE REGRESO AL SITIO -->
+		<input type="hidden" name="cbt" value="Presione aquí para volver al sitio www.tienda.com.mx">
+		<!-- INDICAMOS EL METODO POR EL CUAL ENVIAMOS LA INFORMACIÓN  1 = GET y 2 = POST -->
+		<input type="hidden" name="rm" value="2">
+		<!-- INDICAMOS EL NOMBRE DE NUESTRO SITIO -->
+		<input type="hidden" name="bn" value="Tienda de peliculas">
+		<!-- LA CUENTA DE PAYPAL QUE VA A RECIBIR EL PAGO -->
+		<input type="hidden" name="business" value="moises.rojas@leon.uia.mx">
+		<!-- INDICAMOS EL CONCEPTO DEL CARGO DEL SERVICIO O PRODUCTOS -->
+		<input type="hidden" name="item_name" value="peliculas">
+		<!-- INDICAMOS EL TOTAL DE PRODUCTOS EN CARRITO -->
+		<input type="hidden" name="item_number" value="<?php echo count($carro); ?>">
+		<!-- INDICAMOS EL TOTAL A COBRAR -->
+		<input type="hidden" name="amount" value="<?php echo $suma; ?>">
+		
+		<!-- INDICAMOS LAS VARIABLES PERSONALIZADAS CON LAS QUE VAMOS A TRABAJAR -->
+		<input type="hidden" name="custom" value="<?php echo $_SESSION['nombre_usuario']; ?>">
+		<!-- INDICAMOS LA DIVISA CON LA QUE VAMOS A COBRAR -->
+		<input type="hidden" name="currency_code" value="MXN">
+		<!-- INDICAMOS EL LOGOTIPO O IMAGEN PARA PERSONALIZAR LA PÁGINA DE PAYPAL -->
+		<input type="hidden" name="image_url" value="">
+		<!-- SI EL PAGO ES EXITOSO ENVIAMOS A ESTA PÁGINA -->
+		<input type="hidden" name="return" value="http://www.tienda.com.mx/ipn_success.php">
+		<!-- SI EL PAGO NO ES EXITOSO ENVIAMOS A ESTA PÁGINA -->
+		<input type="hidden" name="cancel_return" value="http://www.tienda.com.mx/ipn_error.php">
+		<!-- INDICAMOS SI EL USUARIO PUEDE O NO DEJAR COMENTARIOS NO = 0 SI=1 -->
+		<input type="hidden" name="no_note" value="0">
+		<!-- INDICAMOS SI EL USUARIO PUEDE O NO SELECCIONAR MÉTODO DE ENVÍO NO = 0 SI=1 -->
+		<input type="hidden" name="no_shipping" value="0">
+		<!-- INDICAMOS QUE VAMOS A PROCESAR UN PAGO -->
+		<input type="hidden" name="cmd" value="_xclick">
+		
+		<input type="submit" value="FINALIZAR COMPRA">
+		</form>
+		
 	<?php } else{ ?>
 		<p> No hay productos seleccionados <a href="index.php">Ver Productos</a></p>
 	<?php } ?>
