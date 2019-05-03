@@ -1,6 +1,6 @@
 <?php
 include_once("admin/includes/config.php");
-	 = $_POST['correo'];
+$para	 = $_POST['correo'];
 $nombre = $_POST['nombre'];
 $asunto = $_POST['asunto'];
 $msg = $_POST['mensaje'];
